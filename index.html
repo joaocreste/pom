@@ -1,0 +1,1591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lean Management — An Academic Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1a2e1a;
+    --royal: #2d4a2d;
+    --mid-blue: #3a6b3a;
+    --sky: #6aaa6a;
+    --pale: #e8f2e8;
+    --cream: #f7f2e8;
+    --paper: #faf7f0;
+    --ink: #1a1a14;
+    --muted: #6b7060;
+    --rule: #d4c9a8;
+    --gold: #b8860b;
+    --gold-light: #f5e8c0;
+    --green: #2d5a1a;
+    --green-light: #d8edcc;
+    --red: #8b2500;
+    --red-light: #fce8e0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    background: #faf7f0;
+    color: var(--ink);
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--navy);
+    color: white;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .header-rule {
+    height: 5px;
+    background: linear-gradient(90deg, var(--gold) 0%, var(--mid-blue) 50%, var(--gold) 100%);
+  }
+  .header-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 56px 32px 48px;
+    position: relative;
+    z-index: 2;
+  }
+  .header-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--sky);
+    margin-bottom: 16px;
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: white;
+  }
+  header h1 em {
+    color: var(--sky);
+    font-style: italic;
+  }
+  .header-subtitle {
+    margin-top: 16px;
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.65);
+    font-weight: 300;
+    max-width: 560px;
+  }
+  .header-bg {
+    position: absolute;
+    right: -60px;
+    top: -40px;
+    width: 420px;
+    height: 420px;
+    border: 1px solid rgba(255,255,255,0.04);
+    border-radius: 50%;
+    z-index: 1;
+  }
+  .header-bg::after {
+    content: '';
+    position: absolute;
+    inset: 40px;
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 50%;
+  }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--royal);
+    border-bottom: 3px solid var(--gold);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-inner::-webkit-scrollbar { display: none; }
+  nav a {
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 14px 18px;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -3px;
+    white-space: nowrap;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  nav a:hover { color: white; border-bottom-color: var(--sky); }
+  nav a.active { color: white; border-bottom-color: var(--gold); }
+
+  /* ── MAIN LAYOUT ── */
+  main {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 32px 80px;
+  }
+
+  section {
+    padding-top: 64px;
+  }
+
+  .section-marker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mid-blue);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-marker::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+    max-width: 80px;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.2;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--rule);
+  }
+
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--royal);
+    margin: 32px 0 12px;
+  }
+
+  p { margin-bottom: 16px; color: #2a2d3a; }
+
+  /* ── DEFINITION BOX ── */
+  .def-box {
+    background: var(--navy);
+    color: white;
+    border-left: 4px solid var(--gold);
+    padding: 24px 28px;
+    margin: 28px 0;
+    border-radius: 0 4px 4px 0;
+    position: relative;
+  }
+  .def-box .def-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .def-box p { color: rgba(255,255,255,0.9); margin: 0; font-size: 1.05rem; }
+
+  /* ── CALLOUT ── */
+  .callout {
+    background: var(--pale);
+    border-left: 4px solid var(--mid-blue);
+    padding: 18px 22px;
+    margin: 24px 0;
+    border-radius: 0 4px 4px 0;
+    font-size: 0.95rem;
+    color: var(--navy);
+  }
+  .callout strong { color: var(--royal); }
+
+  /* ── WASTE GRID ── */
+  .waste-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 14px;
+    margin: 28px 0;
+  }
+  .waste-card {
+    background: white;
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--mid-blue);
+    padding: 18px 16px;
+    border-radius: 2px;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .waste-card:hover {
+    box-shadow: 0 4px 16px rgba(13,27,62,0.1);
+    transform: translateY(-2px);
+  }
+  .waste-icon {
+    font-size: 1.6rem;
+    margin-bottom: 8px;
+    display: block;
+  }
+  .waste-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+  .waste-card p {
+    font-size: 0.83rem;
+    color: var(--muted);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* ── PERFORMANCE OBJECTIVES RADIAL ── */
+  .perf-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin: 28px 0;
+  }
+  .perf-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+  .perf-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: white;
+    border: 1px solid var(--rule);
+    padding: 14px 16px;
+    border-radius: 3px;
+    cursor: default;
+    transition: background 0.2s;
+  }
+  .perf-item:hover { background: var(--pale); }
+  .perf-dot {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  .perf-item h4 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--navy);
+    margin-bottom: 2px;
+  }
+  .perf-item p { font-size: 0.82rem; color: var(--muted); margin: 0; line-height: 1.4; }
+
+  /* SVG diagram area */
+  .diagram-box {
+    background: white;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ── PUSH vs PULL ── */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 2px solid var(--rule);
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 28px 0;
+  }
+  @media (max-width: 580px) { .compare-grid { grid-template-columns: 1fr; } }
+  .compare-col {
+    padding: 24px 22px;
+  }
+  .compare-col:first-child { border-right: 2px solid var(--rule); }
+  .compare-col.push { background: #fdf6ee; }
+  .compare-col.pull { background: #eef5ff; }
+  .compare-col h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid;
+  }
+  .push h4 { color: var(--gold); border-color: var(--gold); }
+  .pull h4 { color: var(--mid-blue); border-color: var(--mid-blue); }
+  .compare-col ul { list-style: none; padding: 0; }
+  .compare-col li {
+    font-size: 0.9rem;
+    padding: 5px 0;
+    padding-left: 16px;
+    position: relative;
+    color: #333;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .compare-col li:last-child { border-bottom: none; }
+  .compare-col li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    font-size: 0.7rem;
+    top: 7px;
+  }
+  .push li::before { color: var(--gold); }
+  .pull li::before { color: var(--mid-blue); }
+
+  /* ── LEAN LEVERS ── */
+  .levers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 28px 0;
+  }
+  @media (max-width: 600px) { .levers-grid { grid-template-columns: 1fr; } }
+  .lever-card {
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    overflow: hidden;
+    background: white;
+  }
+  .lever-header {
+    background: var(--royal);
+    color: white;
+    padding: 14px 16px;
+  }
+  .lever-header .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--sky);
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+  }
+  .lever-header h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+  }
+  .lever-body {
+    padding: 16px;
+    font-size: 0.88rem;
+    color: #3a3d4a;
+    line-height: 1.6;
+  }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 32px;
+    margin: 28px 0;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--rule);
+  }
+  .tl-item {
+    position: relative;
+    margin-bottom: 28px;
+  }
+  .tl-dot {
+    position: absolute;
+    left: -27px;
+    top: 4px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--mid-blue);
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px var(--mid-blue);
+  }
+  .tl-item h4 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 1rem;
+    margin-bottom: 4px;
+  }
+  .tl-item p { font-size: 0.9rem; color: var(--muted); margin: 0; }
+
+  /* ── Q&A ACCORDION ── */
+  .qa-section { margin: 28px 0; }
+  .qa-item {
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    margin-bottom: 8px;
+    overflow: hidden;
+    background: white;
+  }
+  .qa-question {
+    padding: 16px 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    user-select: none;
+    transition: background 0.15s;
+  }
+  .qa-question:hover { background: var(--pale); }
+  .qa-question.open { background: var(--navy); color: white; }
+  .qa-q-text {
+    font-family: 'Source Serif 4', serif;
+    font-weight: 600;
+    font-size: 0.97rem;
+    line-height: 1.5;
+  }
+  .qa-question.open .qa-q-text { color: white; }
+  .qa-chevron {
+    font-size: 0.75rem;
+    transition: transform 0.25s;
+    margin-top: 3px;
+    flex-shrink: 0;
+    color: var(--mid-blue);
+  }
+  .qa-question.open .qa-chevron { transform: rotate(180deg); color: var(--sky); }
+  .qa-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.2s;
+    background: #f9fbff;
+    border-top: 0 solid var(--rule);
+  }
+  .qa-answer.open {
+    max-height: 400px;
+    padding: 18px 20px;
+    border-top: 1px solid var(--rule);
+  }
+  .qa-answer p { font-size: 0.93rem; color: #2a2d3a; margin: 0; }
+
+  /* ── MCQ ── */
+  .mcq-card {
+    background: white;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 28px;
+    margin: 20px 0;
+    position: relative;
+  }
+  .mcq-num {
+    position: absolute;
+    top: -12px;
+    left: 20px;
+    background: var(--royal);
+    color: white;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    padding: 4px 10px;
+    border-radius: 2px;
+  }
+  .mcq-question {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 18px;
+    line-height: 1.45;
+  }
+  .mcq-options { display: flex; flex-direction: column; gap: 10px; }
+  .mcq-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 16px;
+    border: 1.5px solid var(--rule);
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.93rem;
+    transition: all 0.15s;
+    background: white;
+    text-align: left;
+    width: 100%;
+    color: var(--ink);
+  }
+  .mcq-option:hover:not([disabled]) { border-color: var(--mid-blue); background: var(--pale); }
+  .mcq-option .opt-letter {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--pale);
+    color: var(--royal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .mcq-option.correct { border-color: var(--green); background: var(--green-light); }
+  .mcq-option.correct .opt-letter { background: var(--green); color: white; }
+  .mcq-option.incorrect { border-color: var(--red); background: var(--red-light); }
+  .mcq-option.incorrect .opt-letter { background: var(--red); color: white; }
+  .mcq-option[disabled] { cursor: default; }
+  .mcq-feedback {
+    margin-top: 14px;
+    padding: 12px 16px;
+    border-radius: 3px;
+    font-size: 0.9rem;
+    display: none;
+    line-height: 1.5;
+  }
+  .mcq-feedback.correct { background: var(--green-light); color: var(--green); border-left: 3px solid var(--green); display: block; }
+  .mcq-feedback.incorrect { background: var(--red-light); color: var(--red); border-left: 3px solid var(--red); display: block; }
+  .mcq-reset {
+    margin-top: 12px;
+    padding: 8px 18px;
+    background: var(--royal);
+    color: white;
+    border: none;
+    border-radius: 3px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: none;
+    transition: background 0.15s;
+  }
+  .mcq-reset:hover { background: var(--navy); }
+
+  /* ── SCORE BOX ── */
+  .score-box {
+    background: var(--navy);
+    color: white;
+    padding: 24px 28px;
+    border-radius: 4px;
+    margin: 28px 0;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .score-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .score-label { font-size: 0.9rem; color: rgba(255,255,255,0.7); margin-top: 4px; }
+  .score-bar-wrap { flex: 1; min-width: 160px; }
+  .score-bar-bg { height: 8px; background: rgba(255,255,255,0.15); border-radius: 4px; overflow: hidden; }
+  .score-bar-fill { height: 100%; background: linear-gradient(90deg, var(--mid-blue), var(--gold)); border-radius: 4px; transition: width 0.8s ease; width: 0%; }
+  /* forest theme: bar uses green→gold */
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy);
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    padding: 28px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    margin-top: 48px;
+  }
+  footer span { color: var(--sky); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up { animation: fadeUp 0.6s ease forwards; }
+  .delay-1 { animation-delay: 0.1s; opacity: 0; }
+  .delay-2 { animation-delay: 0.2s; opacity: 0; }
+  .delay-3 { animation-delay: 0.3s; opacity: 0; }
+
+  /* ── FRAMEWORK TABLE ── */
+  .fw-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.9rem; }
+  .fw-table th {
+    background: var(--royal);
+    color: white;
+    padding: 12px 14px;
+    text-align: left;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .fw-table td { padding: 11px 14px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  .fw-table tr:last-child td { border-bottom: none; }
+  .fw-table tr:nth-child(even) td { background: #f8faff; }
+  .fw-table tr:hover td { background: var(--pale); }
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 2px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+</style>
+</head>
+<body>
+
+<div class="header-rule"></div>
+<header>
+  <div class="header-bg"></div>
+  <div class="header-inner fade-up">
+    <div class="header-label">Process & Operations Management · Module 2</div>
+    <h1>Lean <em>Management</em></h1>
+    <p class="header-subtitle">A structured academic guide covering principles, frameworks, history, and self-assessment questions.</p>
+  </div>
+</header>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#intro" class="active">Introduction</a>
+    <a href="#waste">Waste</a>
+    <a href="#history">History</a>
+    <a href="#pushpull">Push vs Pull</a>
+    <a href="#levers">Levers</a>
+    <a href="#frameworks">Frameworks</a>
+    <a href="#kraljic">Kraljic</a>
+    <a href="#qa">Q&amp;A</a>
+    <a href="#mcq">Quiz</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- ═══ INTRO ═══ -->
+<section id="intro">
+  <div class="section-marker">Section 01</div>
+  <h2>What Is Lean Management?</h2>
+
+  <p>Lean management is one of the most influential operations philosophies of the 20th and 21st centuries. Born from the factory floor and refined into a comprehensive organisational discipline, it asks a deceptively simple question: <strong>what truly adds value for the customer, and what does not?</strong></p>
+
+  <div class="def-box">
+    <div class="def-label">Core Definition</div>
+    <p>Lean management is an operations philosophy that seeks to maximise customer value by systematically eliminating waste and continuously improving processes, flow, and quality.</p>
+  </div>
+
+  <p>The analogy used to introduce lean is instructive: a lean person is healthy — not emaciated, but free of excess. A lean firm is the same. It carries no unnecessary inventory, motion, waiting, or rework. Every activity either adds value or is a target for elimination.</p>
+
+  <div class="callout">
+    <strong>Key Exam Sentence:</strong> A process is not good because people are busy. A process is good when it delivers flow, quality, timeliness, and profit.
+  </div>
+
+  <h3>The Five Performance Objectives</h3>
+  <p>Before diving into lean's tools, you must understand what operations compete on. The course identifies five performance objectives. Lean primarily addresses cost, quality, speed, and dependability — but done well, it enhances all five.</p>
+
+  <div class="perf-container">
+    <div class="perf-list">
+      <div class="perf-item">
+        <div class="perf-dot" style="background:#1a2e1a;color:#6aaa6a;">C</div>
+        <div>
+          <h4>Cost</h4>
+          <p>Doing things productively — reducing resource consumption per unit of output.</p>
+        </div>
+      </div>
+      <div class="perf-item">
+        <div class="perf-dot" style="background:#2d4a2d;color:#e8f2e8;">Q</div>
+        <div>
+          <h4>Quality</h4>
+          <p>Doing things right — meeting or exceeding customer specifications, first time.</p>
+        </div>
+      </div>
+      <div class="perf-item">
+        <div class="perf-dot" style="background:#3a6b3a;color:white;">S</div>
+        <div>
+          <h4>Speed</h4>
+          <p>Doing things fast — minimising the time between order and delivery.</p>
+        </div>
+      </div>
+      <div class="perf-item">
+        <div class="perf-dot" style="background:#b8860b;color:white;">D</div>
+        <div>
+          <h4>Dependability</h4>
+          <p>Doing things on time — reliably meeting promised delivery schedules.</p>
+        </div>
+      </div>
+      <div class="perf-item">
+        <div class="perf-dot" style="background:#1a6b3c;color:white;">F</div>
+        <div>
+          <h4>Flexibility</h4>
+          <p>Ability to change — adapting to shifts in volume, mix, or product design.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ WASTE ═══ -->
+<section id="waste">
+  <div class="section-marker">Section 02</div>
+  <h2>The Anatomy of Waste</h2>
+
+  <p>The concept of <em>muda</em> — the Japanese word for waste — is central to lean. Waste is defined not from the producer's perspective but from the customer's: any activity that consumes resources without adding value is waste.</p>
+
+  <div class="def-box">
+    <div class="def-label">Operational Definition</div>
+    <p>Waste is any activity that consumes time, resources, or space without creating value that the customer is willing to pay for.</p>
+  </div>
+
+  <p>The course identifies six primary categories of waste, each with concrete operational examples:</p>
+
+  <div class="waste-grid">
+    <div class="waste-card">
+      <span class="waste-icon">🏭</span>
+      <h4>Overproduction</h4>
+      <p>Making more than is needed. Extra copies printed; products manufactured before demand exists.</p>
+    </div>
+    <div class="waste-card">
+      <span class="waste-icon">🚚</span>
+      <h4>Transport</h4>
+      <p>Moving parts or materials unnecessarily. Spare parts routed through multiple warehouses.</p>
+    </div>
+    <div class="waste-card">
+      <span class="waste-icon">⏳</span>
+      <h4>Waiting</h4>
+      <p>Idle time in a process. Files queued for approval; supervisory delays stalling output.</p>
+    </div>
+    <div class="waste-card">
+      <span class="waste-icon">📦</span>
+      <h4>Inventory</h4>
+      <p>Excess stock held. Seasonal products warehoused at the wrong time; WIP piling between stations.</p>
+    </div>
+    <div class="waste-card">
+      <span class="waste-icon">✗</span>
+      <h4>Defects</h4>
+      <p>Errors requiring rework. Incorrect customer addresses; components failing quality check.</p>
+    </div>
+    <div class="waste-card">
+      <span class="waste-icon">🏃</span>
+      <h4>Motion</h4>
+      <p>Unnecessary physical movement. Running across a building for the photocopier.</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>Remember:</strong> Lean does not demand zero inventory or zero movement — it demands that every unit of resource consumed must justify itself through value delivered to the customer.
+  </div>
+</section>
+
+<!-- ═══ HISTORY ═══ -->
+<section id="history">
+  <div class="section-marker">Section 03</div>
+  <h2>A Brief History of Lean</h2>
+  <p>Lean did not emerge from a single insight. It developed across a century of industrial evolution, from the assembly lines of Detroit to the production halls of Toyota City.</p>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <h4>Henry Ford — Early 20th Century</h4>
+      <p>Introduced mass production, standardisation, and the moving assembly line. Established the foundational logic of continuous flow in manufacturing.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <h4>Taiichi Ohno & Toyota Production System — 1950s–70s</h4>
+      <p>Ohno systematised waste elimination at Toyota, developing the Toyota Production System (TPS). Introduced just-in-time production, pull systems, jidoka (automation with a human touch), and the kanban method.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <h4>Womack & Jones — 1990s</h4>
+      <p>Published <em>The Machine That Changed the World</em> (1990) and <em>Lean Thinking</em> (1996), coining the term "lean" and diffusing TPS principles to a global audience beyond automotive manufacturing.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <h4>Broader Application — 2000s–Present</h4>
+      <p>Lean principles confirmed effective across sectors: healthcare, construction, financial services, software (Agile), logistics, and public administration. Now a universal management philosophy.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PUSH vs PULL ═══ -->
+<section id="pushpull">
+  <div class="section-marker">Section 04</div>
+  <h2>Push vs Pull Systems</h2>
+  <p>One of lean's most consequential distinctions is between push and pull production logic. The difference determines how material flows through a system and how responsive operations are to real demand.</p>
+
+  <div class="compare-grid">
+    <div class="compare-col push">
+      <h4>⟶ Push System</h4>
+      <ul>
+        <li>Production driven by forecast</li>
+        <li>Output "pushed" downstream regardless of downstream readiness</li>
+        <li>Creates inventory buffers between stations</li>
+        <li>Risk of overproduction when forecasts are wrong</li>
+        <li>Example: traditional batch manufacturing</li>
+        <li>Higher WIP (work-in-progress) levels</li>
+      </ul>
+    </div>
+    <div class="compare-col pull">
+      <h4>⟵ Pull System</h4>
+      <ul>
+        <li>Production triggered by actual downstream demand</li>
+        <li>No work begins until the next stage requests it</li>
+        <li>Reduces unnecessary inventory and WIP</li>
+        <li>Aligns output to real customer need</li>
+        <li>Example: kanban-controlled lines</li>
+        <li>Exposes problems rather than hiding them in stock</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>Lean preference:</strong> Pull systems are preferred because they prevent overproduction — the most fundamental form of waste — and force the process to respond to genuine demand rather than projected demand.
+  </div>
+
+  <!-- Flow diagram -->
+  <div class="diagram-box" style="margin-top:20px;overflow-x:auto;">
+    <svg viewBox="0 0 580 120" width="560" height="110" xmlns="http://www.w3.org/2000/svg" style="max-width:100%">
+      <!-- PUSH row -->
+      <text x="10" y="28" font-family="JetBrains Mono" font-size="9" fill="#b8860b" font-weight="600" letter-spacing="1">PUSH</text>
+      <rect x="60" y="12" width="80" height="32" rx="3" fill="#fdf8ee" stroke="#b8860b" stroke-width="1.5"/>
+      <text x="100" y="32" text-anchor="middle" font-family="Source Serif 4" font-size="10" fill="#1a2e1a">Forecast</text>
+      <path d="M140 28 L160 28" stroke="#b8860b" stroke-width="1.5" marker-end="url(#arrowGold)"/>
+      <rect x="160" y="12" width="80" height="32" rx="3" fill="#fdf8ee" stroke="#b8860b" stroke-width="1.5"/>
+      <text x="200" y="32" text-anchor="middle" font-family="Source Serif 4" font-size="10" fill="#1a2e1a">Produce</text>
+      <path d="M240 28 L260 28" stroke="#b8860b" stroke-width="1.5" marker-end="url(#arrowGold)"/>
+      <rect x="260" y="12" width="80" height="32" rx="3" fill="#fdf8ee" stroke="#b8860b" stroke-width="1.5"/>
+      <text x="300" y="32" text-anchor="middle" font-family="Source Serif 4" font-size="10" fill="#1a2e1a">Inventory</text>
+      <path d="M340 28 L360 28" stroke="#b8860b" stroke-width="1.5" marker-end="url(#arrowGold)"/>
+      <rect x="360" y="12" width="80" height="32" rx="3" fill="#fdf8ee" stroke="#b8860b" stroke-width="1.5"/>
+      <text x="400" y="32" text-anchor="middle" font-family="Source Serif 4" font-size="10" fill="#1a2e1a">Customer</text>
+
+      <!-- PULL row -->
+      <text x="10" y="90" font-family="JetBrains Mono" font-size="9" fill="#3a6b3a" font-weight="600" letter-spacing="1">PULL</text>
+      <rect x="60" y="74" width="80" height="32" rx="3" fill="#eaf2ea" stroke="#3a6b3a" stroke-width="1.5"/>
+      <text x="100" y="94" text-anchor="middle" font-family="Source Serif 4" font-size="10" fill="#1a2e1a">Customer</text>
+      <path d="M160 90 L140 90" stroke="#3a6b3a" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+      <rect x="160" y="74" width="80" height="32" rx="3" fill="#eaf2ea" stroke="#3a6b3a" stroke-width="1.5"/>
+      <text x="200" y="94" text-anchor="middle" font-family="Source Serif 4" font-size="10" fill="#1a2e1a">Signal</text>
+      <path d="M260 90 L240 90" stroke="#3a6b3a" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+      <rect x="260" y="74" width="80" height="32" rx="3" fill="#eaf2ea" stroke="#3a6b3a" stroke-width="1.5"/>
+      <text x="300" y="94" text-anchor="middle" font-family="Source Serif 4" font-size="10" fill="#1a2e1a">Produce</text>
+      <path d="M360 90 L340 90" stroke="#3a6b3a" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+      <rect x="360" y="74" width="80" height="32" rx="3" fill="#eaf2ea" stroke="#3a6b3a" stroke-width="1.5"/>
+      <text x="400" y="94" text-anchor="middle" font-family="Source Serif 4" font-size="10" fill="#1a2e1a">Deliver</text>
+
+      <defs>
+        <marker id="arrowGold" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#b8860b"/>
+        </marker>
+        <marker id="arrowBlue" markerWidth="8" markerHeight="8" refX="2" refY="3" orient="auto">
+          <path d="M8,0 L8,6 L0,3 z" fill="#3a6b3a"/>
+        </marker>
+      </defs>
+    </svg>
+  </div>
+</section>
+
+<!-- ═══ LEVERS ═══ -->
+<section id="levers">
+  <div class="section-marker">Section 05</div>
+  <h2>The Three Main Improvement Levers</h2>
+  <p>Lean improvement is not abstract. The course identifies three concrete operational levers — derived from the Lean Management Game — that produce measurable results when applied systematically.</p>
+
+  <div class="levers-grid">
+    <div class="lever-card">
+      <div class="lever-header">
+        <div class="num">LEVER 01</div>
+        <h4>Layout Improvement</h4>
+      </div>
+      <div class="lever-body">
+        Movement between workstations is transport waste. Redesigning layout to reduce travel distance and improve flow eliminates non-value-adding movement and shortens cycle times. Cells should be arranged in the sequence of operations, minimising handoff distances.
+      </div>
+    </div>
+    <div class="lever-card">
+      <div class="lever-header">
+        <div class="num">LEVER 02</div>
+        <h4>Batch Size Reduction</h4>
+      </div>
+      <div class="lever-body">
+        Large batches reduce per-unit setup cost but create more WIP, longer lead times, and reduced flexibility. Moving toward smaller batches — ideally batch size 1 — reduces WIP in the system, allows faster detection of quality issues, and improves responsiveness to demand variation.
+      </div>
+    </div>
+    <div class="lever-card">
+      <div class="lever-header">
+        <div class="num">LEVER 03</div>
+        <h4>Line Balancing</h4>
+      </div>
+      <div class="lever-body">
+        An unbalanced line creates bottlenecks where one station cannot keep up with takt time while others sit idle. Line balancing redistributes work content across stations so that each operates at roughly the same pace, eliminating waiting and enabling smoother flow.
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>Takt Time</strong> is the available production time divided by customer demand. It defines the required pace of production. Balancing a line means matching each station's cycle time to takt time.
+  </div>
+
+  <!-- Batch size diagram -->
+  <h3>Batch Size: Large vs Small</h3>
+  <div class="diagram-box" style="margin-top:16px;overflow-x:auto;">
+    <svg viewBox="0 0 520 140" width="500" height="130" xmlns="http://www.w3.org/2000/svg" style="max-width:100%">
+      <!-- Large batch -->
+      <text x="10" y="18" font-family="JetBrains Mono" font-size="9" fill="#b8860b" font-weight="600">LARGE BATCH</text>
+      <rect x="10" y="26" width="200" height="40" rx="3" fill="#fdf8ee" stroke="#b8860b" stroke-width="1.5"/>
+      <text x="110" y="50" text-anchor="middle" font-family="Source Serif 4" font-size="10" fill="#1a2e1a">████████████████████</text>
+      <text x="110" y="62" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#b8860b">Batch of 20</text>
+
+      <text x="10" y="86" font-family="JetBrains Mono" font-size="8" fill="#6b7060">High WIP · Long cycle · Low flexibility</text>
+
+      <!-- Small batch -->
+      <text x="280" y="18" font-family="JetBrains Mono" font-size="9" fill="#3a6b3a" font-weight="600">SMALL BATCH</text>
+      <rect x="280" y="26" width="36" height="40" rx="3" fill="#eaf2ea" stroke="#3a6b3a" stroke-width="1.5"/>
+      <text x="298" y="50" text-anchor="middle" font-family="Source Serif 4" font-size="9" fill="#1a2e1a">██</text>
+      <text x="298" y="62" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#3a6b3a">×1</text>
+      <rect x="322" y="26" width="36" height="40" rx="3" fill="#eaf2ea" stroke="#3a6b3a" stroke-width="1.5"/>
+      <text x="340" y="50" text-anchor="middle" font-family="Source Serif 4" font-size="9" fill="#1a2e1a">██</text>
+      <text x="340" y="62" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#3a6b3a">×1</text>
+      <rect x="364" y="26" width="36" height="40" rx="3" fill="#eaf2ea" stroke="#3a6b3a" stroke-width="1.5"/>
+      <text x="382" y="50" text-anchor="middle" font-family="Source Serif 4" font-size="9" fill="#1a2e1a">██</text>
+      <text x="382" y="62" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#3a6b3a">×1</text>
+      <text x="406" y="50" font-family="Source Serif 4" font-size="18" fill="#6b7060">…</text>
+      <text x="280" y="86" font-family="JetBrains Mono" font-size="8" fill="#6b7060">Low WIP · Short cycle · High flexibility</text>
+
+      <!-- divider -->
+      <line x1="258" y1="10" x2="258" y2="100" stroke="#d4c9a8" stroke-width="1" stroke-dasharray="4,3"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ═══ FRAMEWORKS ═══ -->
+<section id="frameworks">
+  <div class="section-marker">Section 06</div>
+  <h2>Key Frameworks at a Glance</h2>
+  <p>The following table summarises the major conceptual frameworks covered in lean management, making them fast to revise before an exam.</p>
+
+  <table class="fw-table">
+    <thead>
+      <tr>
+        <th>Framework</th>
+        <th>Core Idea</th>
+        <th>Exam Relevance</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>7 Wastes (Muda)</strong></td>
+        <td>Any non-value-adding activity: overproduction, transport, waiting, inventory, defects, motion (+ sometimes over-processing)</td>
+        <td><span class="badge" style="background:var(--red-light);color:var(--red);">High</span></td>
+      </tr>
+      <tr>
+        <td><strong>Pull vs Push</strong></td>
+        <td>Pull = production triggered by actual demand; Push = production driven by forecast</td>
+        <td><span class="badge" style="background:var(--red-light);color:var(--red);">High</span></td>
+      </tr>
+      <tr>
+        <td><strong>Takt Time</strong></td>
+        <td>Available time ÷ customer demand; the target pace for each station</td>
+        <td><span class="badge" style="background:var(--gold-light);color:var(--gold);">Medium</span></td>
+      </tr>
+      <tr>
+        <td><strong>Line Balancing</strong></td>
+        <td>Redistribute work so all stations match takt time and bottlenecks are eliminated</td>
+        <td><span class="badge" style="background:var(--red-light);color:var(--red);">High</span></td>
+      </tr>
+      <tr>
+        <td><strong>5 Performance Objectives</strong></td>
+        <td>Cost, Quality, Speed, Dependability, Flexibility — firms choose trade-offs</td>
+        <td><span class="badge" style="background:var(--red-light);color:var(--red);">High</span></td>
+      </tr>
+      <tr>
+        <td><strong>Continuous Improvement (Kaizen)</strong></td>
+        <td>Lean is a journey, not a destination; improvement is incremental and ongoing</td>
+        <td><span class="badge" style="background:var(--gold-light);color:var(--gold);">Medium</span></td>
+      </tr>
+      <tr>
+        <td><strong>Toyota Production System</strong></td>
+        <td>JIT + Jidoka + Heijunka + Kanban: the operational system that became lean</td>
+        <td><span class="badge" style="background:var(--green-light);color:var(--green);">Context</span></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═══ KRALJIC ═══ -->
+<section id="kraljic">
+  <div class="section-marker">Section 07</div>
+  <h2>The Kraljic Matrix</h2>
+
+  <p>Developed by Peter Kraljic in 1983, the Kraljic Matrix is one of the most widely used tools in supply chain and procurement strategy. It helps operations managers decide <em>how</em> to manage each category of purchased input — not all suppliers deserve the same attention or relationship type.</p>
+
+  <div class="def-box">
+    <div class="def-label">Core Purpose</div>
+    <p>The Kraljic Matrix classifies a firm's purchases along two dimensions — profit impact and supply risk — and prescribes a distinct sourcing strategy for each of the four resulting quadrants.</p>
+  </div>
+
+  <h3>The Two Axes</h3>
+  <p>Every purchase a firm makes can be positioned on a 2×2 grid according to:</p>
+  <ul style="margin:0 0 20px 20px;line-height:2;">
+    <li><strong>Profit Impact (vertical):</strong> How significantly does this input affect the firm's cost base, revenue, or product quality? High-impact items are those where changes in price or availability materially affect the bottom line.</li>
+    <li><strong>Supply Risk / Complexity (horizontal):</strong> How difficult is it to source this item reliably? Risk rises with few suppliers, high switching costs, geographic concentration, or technical complexity.</li>
+  </ul>
+
+  <!-- INTERACTIVE MATRIX -->
+  <div style="margin:28px 0;">
+    <div style="background:white;border:1px solid var(--rule);border-radius:4px;padding:24px;overflow-x:auto;">
+      <svg id="kraljic-svg" viewBox="0 0 520 420" width="100%" style="max-width:520px;display:block;margin:0 auto;" xmlns="http://www.w3.org/2000/svg">
+        <!-- Axis backgrounds per quadrant -->
+        <!-- Bottom-left: Non-critical -->
+        <rect x="60" y="210" width="200" height="160" fill="#f7f4ed" stroke="#d4c9a8" stroke-width="1"/>
+        <!-- Bottom-right: Bottleneck -->
+        <rect x="260" y="210" width="200" height="160" fill="#fdf3e3" stroke="#d4c9a8" stroke-width="1"/>
+        <!-- Top-left: Leverage -->
+        <rect x="60" y="50" width="200" height="160" fill="#eaf2ea" stroke="#d4c9a8" stroke-width="1"/>
+        <!-- Top-right: Strategic -->
+        <rect x="260" y="50" width="200" height="160" fill="#e8f0e8" stroke="#d4c9a8" stroke-width="1"/>
+
+        <!-- Quadrant labels -->
+        <!-- Non-critical -->
+        <text x="160" y="82" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#6b7060" font-weight="600" letter-spacing="0.08em">NON-CRITICAL</text>
+        <text x="160" y="98" text-anchor="middle" font-family="Source Serif 4" font-size="9.5" fill="#8a8a78">Routine items</text>
+
+        <!-- Wait — need to swap: leverage = high profit, low risk = top LEFT -->
+        <!-- Strategic = high profit, high risk = top RIGHT -->
+        <!-- Let me redo -->
+
+        <!-- Top-left: LEVERAGE (high profit, low supply risk) -->
+        <text x="160" y="82" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#2d4a2d" font-weight="600" letter-spacing="0.08em">LEVERAGE</text>
+        <text x="160" y="97" text-anchor="middle" font-family="Source Serif 4" font-size="9" fill="#6b7060">High profit · Low risk</text>
+
+        <!-- Top-right: STRATEGIC -->
+        <rect x="260" y="50" width="200" height="160" fill="#e3ede3" stroke="#d4c9a8" stroke-width="1"/>
+        <text x="360" y="82" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#1a2e1a" font-weight="600" letter-spacing="0.08em">STRATEGIC</text>
+        <text x="360" y="97" text-anchor="middle" font-family="Source Serif 4" font-size="9" fill="#6b7060">High profit · High risk</text>
+
+        <!-- Bottom-left: NON-CRITICAL -->
+        <rect x="60" y="210" width="200" height="160" fill="#f7f4ed" stroke="#d4c9a8" stroke-width="1"/>
+        <text x="160" y="282" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#6b7060" font-weight="600" letter-spacing="0.08em">NON-CRITICAL</text>
+        <text x="160" y="297" text-anchor="middle" font-family="Source Serif 4" font-size="9" fill="#6b7060">Low profit · Low risk</text>
+
+        <!-- Bottom-right: BOTTLENECK -->
+        <rect x="260" y="210" width="200" height="160" fill="#fdf3e3" stroke="#d4c9a8" stroke-width="1"/>
+        <text x="360" y="282" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#8b4500" font-weight="600" letter-spacing="0.08em">BOTTLENECK</text>
+        <text x="360" y="297" text-anchor="middle" font-family="Source Serif 4" font-size="9" fill="#6b7060">Low profit · High risk</text>
+
+        <!-- Strategy tags -->
+        <rect x="100" y="108" width="120" height="22" rx="3" fill="#2d4a2d"/>
+        <text x="160" y="123" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="white" letter-spacing="0.06em">COMPETITIVE BIDDING</text>
+
+        <rect x="298" y="108" width="124" height="22" rx="3" fill="#1a2e1a"/>
+        <text x="360" y="123" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="white" letter-spacing="0.06em">DEEP PARTNERSHIP</text>
+
+        <rect x="88" y="308" width="144" height="22" rx="3" fill="#8a8a78"/>
+        <text x="160" y="323" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="white" letter-spacing="0.06em">E-PROCUREMENT</text>
+
+        <rect x="298" y="308" width="124" height="22" rx="3" fill="#8b4500"/>
+        <text x="360" y="323" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="white" letter-spacing="0.06em">SECURE CONTRACTS</text>
+
+        <!-- Example items -->
+        <text x="160" y="150" text-anchor="middle" font-family="Source Serif 4" font-size="8.5" fill="#3a6b3a" font-style="italic">e.g. commodity steel, packaging</text>
+        <text x="360" y="150" text-anchor="middle" font-family="Source Serif 4" font-size="8.5" fill="#1a4a1a" font-style="italic">e.g. proprietary chips, key IP</text>
+        <text x="160" y="350" text-anchor="middle" font-family="Source Serif 4" font-size="8.5" fill="#8a8a78" font-style="italic">e.g. office supplies, cleaning</text>
+        <text x="360" y="350" text-anchor="middle" font-family="Source Serif 4" font-size="8.5" fill="#8b4500" font-style="italic">e.g. rare earths, single supplier</text>
+
+        <!-- Axes -->
+        <!-- Y axis line -->
+        <line x1="60" y1="370" x2="60" y2="40" stroke="#1a2e1a" stroke-width="2"/>
+        <!-- X axis line -->
+        <line x1="60" y1="370" x2="470" y2="370" stroke="#1a2e1a" stroke-width="2"/>
+        <!-- Arrow heads -->
+        <polygon points="60,38 55,52 65,52" fill="#1a2e1a"/>
+        <polygon points="472,370 458,365 458,375" fill="#1a2e1a"/>
+
+        <!-- Y axis label -->
+        <text x="18" y="215" text-anchor="middle" font-family="JetBrains Mono" font-size="9.5" fill="#1a2e1a" font-weight="600" transform="rotate(-90,18,215)" letter-spacing="0.1em">PROFIT IMPACT</text>
+        <text x="28" y="100" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#3a6b3a">HIGH</text>
+        <text x="28" y="340" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#8a8a78">LOW</text>
+
+        <!-- X axis label -->
+        <text x="265" y="405" text-anchor="middle" font-family="JetBrains Mono" font-size="9.5" fill="#1a2e1a" font-weight="600" letter-spacing="0.1em">SUPPLY RISK / COMPLEXITY</text>
+        <text x="100" y="390" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#8a8a78">LOW</text>
+        <text x="420" y="390" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#8b4500">HIGH</text>
+
+        <!-- Centre dividers -->
+        <line x1="260" y1="50" x2="260" y2="370" stroke="#d4c9a8" stroke-width="1.5" stroke-dasharray="5,4"/>
+        <line x1="60" y1="210" x2="460" y2="210" stroke="#d4c9a8" stroke-width="1.5" stroke-dasharray="5,4"/>
+      </svg>
+    </div>
+  </div>
+
+  <h3>The Four Quadrants — Strategy Guide</h3>
+
+  <div class="waste-grid" style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));">
+    <div class="waste-card" style="border-top-color:#8a8a78;">
+      <span class="waste-icon">🖱️</span>
+      <h4>Non-Critical</h4>
+      <p><strong>Low profit · Low risk.</strong> Automate and streamline. Use e-procurement, catalogue buying, or click-and-buy. Minimise admin overhead — the goal is efficiency, not relationship management.</p>
+    </div>
+    <div class="waste-card" style="border-top-color:#3a6b3a;">
+      <span class="waste-icon">⚖️</span>
+      <h4>Leverage</h4>
+      <p><strong>High profit · Low risk.</strong> Use your buying power. Run competitive tenders, play suppliers off against each other, and negotiate hard on price and terms.</p>
+    </div>
+    <div class="waste-card" style="border-top-color:#b8860b;">
+      <span class="waste-icon">🔒</span>
+      <h4>Bottleneck</h4>
+      <p><strong>Low profit · High risk.</strong> Security of supply is paramount — cost is secondary. Lock in long-term contracts, build safety stocks, and qualify backup suppliers where possible.</p>
+    </div>
+    <div class="waste-card" style="border-top-color:#1a2e1a;">
+      <span class="waste-icon">🤝</span>
+      <h4>Strategic</h4>
+      <p><strong>High profit · High risk.</strong> Invest in deep, long-term partnerships. Share forecasts, co-develop products, align incentives, and manage the relationship as a strategic asset.</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>Key Exam Sentence:</strong> The Kraljic Matrix prevents firms from applying the same sourcing logic to every purchase. A one-size-fits-all procurement approach either wastes resources on routine items or under-invests in strategic ones.
+  </div>
+
+  <h3>How Items Can Move Across the Matrix</h3>
+  <p>Positions in the matrix are not fixed. A <em>bottleneck</em> item can be moved toward <em>non-critical</em> if the firm invests in qualifying new suppliers or redesigning the product to use more standard components. A <em>leverage</em> item can drift toward <em>strategic</em> if the firm becomes dependent on a single preferred supplier. Actively managing these movements is part of good procurement strategy.</p>
+</section>
+
+<!-- ═══ Q&A ═══ -->
+<section id="qa">
+  <div class="section-marker">Section 08</div>
+  <h2>Revision Q&amp;A</h2>
+  <p>Click each question to reveal the model answer. These are framed in the style of typical exam questions.</p>
+
+  <div class="qa-section" id="qa-list">
+    <!-- populated by JS -->
+  </div>
+</section>
+
+<!-- ═══ MCQ ═══ -->
+<section id="mcq">
+  <div class="section-marker">Section 09</div>
+  <h2>Self-Assessment Quiz</h2>
+  <p>Test your understanding with the following multiple-choice questions. Each question has one correct answer.</p>
+
+  <div class="score-box" id="score-box" style="display:none">
+    <div>
+      <div class="score-num" id="score-val">0/20</div>
+      <div class="score-label">Your score</div>
+    </div>
+    <div class="score-bar-wrap">
+      <div class="score-bar-bg">
+        <div class="score-bar-fill" id="score-bar"></div>
+      </div>
+      <div style="margin-top:6px;font-size:0.82rem;color:rgba(255,255,255,0.6)" id="score-msg"></div>
+    </div>
+  </div>
+
+  <div id="mcq-container"></div>
+</section>
+
+</main>
+
+<footer>
+  <span>LEAN MANAGEMENT</span> · Process &amp; Operations Management · Academic Study Guide
+</footer>
+
+<script>
+// ── NAV ACTIVE STATE ──
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('nav a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 100) current = s.id;
+  });
+  navLinks.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+});
+
+// ── Q&A DATA ──
+const qaData = [
+  {
+    q: "Define lean management and explain its core objective.",
+    a: "Lean management is an operations philosophy centred on maximising customer value by systematically eliminating waste — any activity consuming resources without adding value — and continuously improving processes. Its core objective is to create more value with fewer resources by making operations leaner: removing excess inventory, motion, waiting, defects, overproduction, and unnecessary transport."
+  },
+  {
+    q: "Why does lean prefer pull systems over push systems?",
+    a: "Lean prefers pull because it aligns production with actual, real-time customer demand rather than with forecasts that are inherently imprecise. Push systems risk overproduction — lean's most fundamental waste — and accumulate inventory buffers that hide inefficiencies. Pull systems expose problems immediately: if a downstream station signals no demand, upstream stations stop, making waste visible rather than masking it in stock."
+  },
+  {
+    q: "What are the three main operational levers for lean improvement, and what does each address?",
+    a: "The three levers are: (1) Layout improvement — reducing unnecessary movement and transport waste by redesigning workstation arrangement to follow the sequence of operations; (2) Batch size reduction — moving toward smaller batches or batch size 1 to reduce WIP, shorten cycle times, and increase flexibility at the cost of apparent local efficiency; (3) Line balancing — redistributing work so all stations operate at takt time, eliminating bottlenecks and waiting between stages."
+  },
+  {
+    q: "What is takt time, and why is it important for line balancing?",
+    a: "Takt time is calculated as available production time divided by customer demand. It represents the pace at which the process must produce to meet customer requirements. Line balancing uses takt time as the target: every station's cycle time should equal takt time. Stations faster than takt have idle time (a form of waste); stations slower than takt create bottlenecks. Balancing redistributes work to eliminate both."
+  },
+  {
+    q: "Explain the relationship between batch size and work-in-progress (WIP). Why might smaller batches improve overall system performance?",
+    a: "Larger batches increase WIP because more units are in the system at any one time waiting to be processed. By Little's Law, higher WIP leads to longer cycle times even if individual processing speeds are unchanged. Smaller batches reduce WIP, shorten cycle times, improve responsiveness to demand changes, and allow quality defects to be detected faster — preventing a defective design from being replicated across a large batch."
+  },
+  {
+    q: "Is lean management a project or a philosophy? Explain the distinction.",
+    a: "Lean is explicitly a philosophy and ongoing journey, not a one-time project with a start and end date. This is the principle of Kaizen — continuous improvement. A project reaches completion; lean has no endpoint because waste can always be reduced further, processes can always flow better, and customer value can always be deepened. Treating lean as a project risks reverting to old practices once the initial effort is over."
+  },
+  {
+    q: "How does lean relate to the five performance objectives?",
+    a: "Lean primarily and directly improves cost (through waste elimination), quality (through defect reduction and immediate problem-visibility), speed (through reduced WIP and shorter cycle times), and dependability (through more predictable, stable processes). It also supports flexibility — particularly through small batches and pull systems that allow quicker response to demand changes. Firms do not need to trade off lean against performance; lean improves the performance system as a whole."
+  }
+];
+
+const qaList = document.getElementById('qa-list');
+qaData.forEach((item, i) => {
+  const div = document.createElement('div');
+  div.className = 'qa-item';
+  div.innerHTML = `
+    <div class="qa-question" onclick="toggleQA(this)">
+      <span class="qa-q-text">Q${i+1}. ${item.q}</span>
+      <span class="qa-chevron">▼</span>
+    </div>
+    <div class="qa-answer">
+      <p>${item.a}</p>
+    </div>
+  `;
+  qaList.appendChild(div);
+});
+
+function toggleQA(el) {
+  const answer = el.nextElementSibling;
+  const isOpen = answer.classList.contains('open');
+  // close all
+  document.querySelectorAll('.qa-answer.open').forEach(a => a.classList.remove('open'));
+  document.querySelectorAll('.qa-question.open').forEach(q => q.classList.remove('open'));
+  if (!isOpen) {
+    answer.classList.add('open');
+    el.classList.add('open');
+  }
+}
+
+// ── MCQ DATA ──
+const mcqData = [
+  {
+    q: "Which of the following best describes 'waste' in lean management?",
+    opts: [
+      "Any activity performed by a worker that takes more than 5 minutes",
+      "Any activity that consumes resources without adding value for the customer",
+      "Production that exceeds the monthly budget",
+      "The difference between actual and planned output"
+    ],
+    correct: 1,
+    explanation: "Waste (muda) is defined from the customer's perspective: any resource consumption — time, labour, materials — that does not result in value the customer is willing to pay for. Duration or cost overrun are not the defining criterion."
+  },
+  {
+    q: "A factory produces in large batches to reduce setup costs per unit. Which lean principle does this most directly conflict with?",
+    opts: [
+      "Line balancing",
+      "Batch size reduction",
+      "Pull production",
+      "Layout improvement"
+    ],
+    correct: 1,
+    explanation: "Large batches may reduce per-unit setup cost (local efficiency) but increase WIP, lengthen cycle times, and reduce flexibility — directly conflicting with the lean lever of batch size reduction."
+  },
+  {
+    q: "Available production time per day is 480 minutes. Customer demand is 60 units per day. What is the takt time?",
+    opts: [
+      "8 minutes per unit",
+      "60 minutes per unit",
+      "0.125 minutes per unit",
+      "480 minutes per unit"
+    ],
+    correct: 0,
+    explanation: "Takt time = Available time ÷ Demand = 480 ÷ 60 = 8 minutes per unit. Each station should complete its work on one unit every 8 minutes to meet demand exactly."
+  },
+  {
+    q: "In a pull system, what triggers production at a workstation?",
+    opts: [
+      "The monthly production forecast prepared by planning",
+      "A signal from the downstream stage indicating a need for more units",
+      "Achieving the minimum batch size required for efficiency",
+      "The inventory falling below the safety stock level"
+    ],
+    correct: 1,
+    explanation: "Pull systems are demand-triggered: production only begins when the downstream stage (or ultimately the customer) signals a need. This is typically implemented via kanban cards or digital signals, preventing overproduction."
+  },
+  {
+    q: "Which statement about lean and the five performance objectives is most accurate?",
+    opts: [
+      "Lean exclusively improves cost and has no effect on quality or speed",
+      "Lean forces a trade-off: you gain flexibility but sacrifice dependability",
+      "Lean improves cost, quality, speed, and dependability simultaneously by eliminating waste",
+      "Lean applies only to manufacturing and not to service operations"
+    ],
+    correct: 2,
+    explanation: "Lean improves multiple objectives simultaneously: waste elimination reduces cost, defect reduction improves quality, WIP reduction increases speed, and process stability improves dependability. Lean has also been successfully applied to services, healthcare, and software development."
+  },
+  {
+    q: "According to the course, an operation is best defined as:",
+    opts: [
+      "A financial system used to allocate capital",
+      "The process of bringing goods and services to customers",
+      "A marketing activity used to stimulate demand",
+      "A legal structure for organising firms"
+    ],
+    correct: 1,
+    explanation: "The course defines an operation as the process of bringing goods and services to customers — a transformation process where inputs are converted into outputs that create value. It is neither a financial, marketing, nor legal concept."
+  },
+  {
+    q: "Which of the following is NOT one of the five core performance objectives in operations management?",
+    opts: [
+      "Cost",
+      "Quality",
+      "Market share",
+      "Dependability"
+    ],
+    correct: 2,
+    explanation: "The five performance objectives are Cost, Quality, Speed, Dependability, and Flexibility. Market share is a business outcome, not an operational performance objective — it may result from excelling on the five objectives but is not one of them."
+  },
+  {
+    q: "If customers mainly value fast delivery, operations should especially excel in:",
+    opts: [
+      "Quality",
+      "Speed",
+      "Flexibility",
+      "Sustainability"
+    ],
+    correct: 1,
+    explanation: "The course directly maps customer expectations to performance objectives: fast delivery corresponds to Speed. Operations strategy is about matching operational priorities to what customers actually value."
+  },
+  {
+    q: "Which forecasting distinction is illustrated by the tire example in POM1?",
+    opts: [
+      "Push versus pull",
+      "Short term versus long term",
+      "Dependent demand versus independent demand",
+      "Fixed cost versus variable cost"
+    ],
+    correct: 2,
+    explanation: "The tire example shows that tires needed because cars are being produced (derived from a production plan) represent dependent demand, while replacement tires bought by car owners directly from the market represent independent demand."
+  },
+  {
+    q: "Which of the following is a classic way of reconciling capacity and demand?",
+    opts: [
+      "Product differentiation",
+      "Level capacity",
+      "Vertical integration",
+      "Market segmentation"
+    ],
+    correct: 1,
+    explanation: "The three classic approaches to reconciling capacity and demand are: level capacity (keep capacity stable and use buffers), chase demand (adjust capacity to match demand), and demand management (shift or smooth demand over time). Level capacity is the correct answer here."
+  },
+  {
+    q: "In the base-stock model, the firm generally orders:",
+    opts: [
+      "A fixed quantity every day regardless of inventory",
+      "Only when inventory reaches zero",
+      "Enough to replenish inventory up to a fixed target level",
+      "The largest quantity possible to avoid stockouts"
+    ],
+    correct: 2,
+    explanation: "In the base-stock (order-up-to) model, inventory is periodically reviewed and the firm orders enough to bring inventory back up to a pre-set target level. The order quantity therefore varies depending on how much has been consumed since the last review."
+  },
+  {
+    q: "In lean management, waste is best understood as:",
+    opts: [
+      "Any activity that increases labour utilisation",
+      "Any activity that consumes resources without adding value to the customer",
+      "Any activity performed by suppliers",
+      "Any activity involving inventory"
+    ],
+    correct: 1,
+    explanation: "Waste is defined strictly from the customer's value perspective: any consumption of time, materials, or labour that does not result in something the customer values and is willing to pay for. High labour utilisation or supplier activity are not inherently wasteful."
+  },
+  {
+    q: "Which of the following is listed as a waste category in the lean module?",
+    opts: [
+      "Segmentation",
+      "Hedging",
+      "Motion",
+      "Outsourcing"
+    ],
+    correct: 2,
+    explanation: "Motion — unnecessary physical movement by workers — is one of the classic lean waste categories. Running across a building to use a photocopier is a textbook example. Segmentation, hedging, and outsourcing are not waste categories."
+  },
+  {
+    q: "Lean generally prefers pull over push because pull:",
+    opts: [
+      "Increases batch sizes",
+      "Produces strictly from forecasts",
+      "Aligns production with actual demand",
+      "Requires more rework"
+    ],
+    correct: 2,
+    explanation: "Pull systems trigger production only when the downstream stage signals genuine demand, preventing overproduction — lean's most fundamental waste. Push systems, by contrast, produce ahead of real demand based on forecasts, creating inventory risk."
+  },
+  {
+    q: "In the lean game, improving layout mainly helps reduce:",
+    opts: [
+      "Brand risk",
+      "Transportation and movement waste",
+      "Demand uncertainty",
+      "Supplier opportunism"
+    ],
+    correct: 1,
+    explanation: "Layout improvement is one of the three main lean levers. By redesigning workstation arrangement to follow the sequence of operations, movement and transport waste — non-value-adding physical motion — is significantly reduced."
+  },
+  {
+    q: "In the Kraljic Matrix, a strategic product is typically managed through:",
+    opts: [
+      "Partnership",
+      "E-procurement",
+      "Periodic discounting",
+      "Spot purchasing only"
+    ],
+    correct: 0,
+    explanation: "Strategic items sit in the high profit impact / high supply risk quadrant. They require deep, long-term partnerships with suppliers — sharing forecasts, co-developing products, and aligning incentives. E-procurement is reserved for non-critical, routine items."
+  },
+  {
+    q: "Transaction Cost Economics suggests that firms may prefer to make internally rather than buy externally when:",
+    opts: [
+      "Asset specificity and uncertainty are high",
+      "Product demand is seasonal",
+      "Labour is cheap",
+      "Marketing costs are rising"
+    ],
+    correct: 0,
+    explanation: "TCE argues that high asset specificity (investments tailored to a specific relationship) combined with high uncertainty creates hold-up risk and makes external transactions costly. When these conditions hold, internal production (make) can be more efficient than market exchange (buy)."
+  },
+  {
+    q: "The Apple case mainly illustrates that:",
+    opts: [
+      "Most value in the supply chain is captured in final assembly labour",
+      "Value capture is often strongest in design, branding, and other high-value activities",
+      "Supply chains are no longer necessary for electronics",
+      "Profit impact is irrelevant in procurement"
+    ],
+    correct: 1,
+    explanation: "The iPhone X cost breakdown shows only ~2% going to assembly labour, while design, R&D, branding, and ecosystem control capture most value. The smile curve reinforces this: value is highest at the upstream (design/IP) and downstream (brand/customer) ends, not in the middle (assembly)."
+  },
+  {
+    q: "Which three dimensions make up the course's sustainability framework?",
+    opts: [
+      "Financial, legal, operational",
+      "Economic, social, environmental",
+      "Cost, speed, flexibility",
+      "Planning, sourcing, delivery"
+    ],
+    correct: 1,
+    explanation: "The course frames sustainability around the classic triple bottom line: economic (profitability and viability), social (labour rights, health, safety, inclusion), and environmental (emissions, biodiversity, resource use). This maps directly to the ESG framework introduced in POM4."
+  },
+  {
+    q: "In the beer transportation game, the main trade-off is between:",
+    opts: [
+      "Packaging and branding",
+      "Rail safety and warehouse automation",
+      "Cost/emissions and flexibility/inventory",
+      "Marketing spend and labour productivity"
+    ],
+    correct: 2,
+    explanation: "The beer game centres on choosing between rail (cheaper, greener, but inflexible — requires more inventory) and road (flexible, but more expensive and more polluting). The optimal solution is typically a mixed strategy that ships stable base demand by rail and uses road for variable demand, balancing total cost, emissions, inventory, and service level."
+  }
+];
+
+let answers = new Array(mcqData.length).fill(null);
+let correct = 0;
+
+const container = document.getElementById('mcq-container');
+mcqData.forEach((q, qi) => {
+  const card = document.createElement('div');
+  card.className = 'mcq-card';
+  card.id = `mcq-${qi}`;
+
+  const letters = ['A','B','C','D'];
+  const optsHtml = q.opts.map((o, oi) => `
+    <button class="mcq-option" onclick="answerMCQ(${qi}, ${oi})" id="opt-${qi}-${oi}">
+      <span class="opt-letter">${letters[oi]}</span>
+      <span>${o}</span>
+    </button>
+  `).join('');
+
+  card.innerHTML = `
+    <div class="mcq-num">QUESTION ${qi+1} OF ${mcqData.length}</div>
+    <div class="mcq-question">${q.q}</div>
+    <div class="mcq-options">${optsHtml}</div>
+    <div class="mcq-feedback" id="fb-${qi}"></div>
+    <button class="mcq-reset" id="reset-${qi}" onclick="resetMCQ(${qi})">↺ Try Again</button>
+  `;
+  container.appendChild(card);
+});
+
+function answerMCQ(qi, oi) {
+  if (answers[qi] !== null) return;
+  answers[qi] = oi;
+  const isCorrect = oi === mcqData[qi].correct;
+  if (isCorrect) correct++;
+
+  // disable all options
+  for (let i = 0; i < mcqData[qi].opts.length; i++) {
+    const btn = document.getElementById(`opt-${qi}-${i}`);
+    btn.disabled = true;
+    if (i === mcqData[qi].correct) btn.classList.add('correct');
+  }
+  if (!isCorrect) document.getElementById(`opt-${qi}-${oi}`).classList.add('incorrect');
+
+  const fb = document.getElementById(`fb-${qi}`);
+  fb.className = `mcq-feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+  fb.textContent = (isCorrect ? '✓ Correct. ' : '✗ Incorrect. ') + mcqData[qi].explanation;
+
+  document.getElementById(`reset-${qi}`).style.display = 'inline-block';
+
+  updateScore();
+}
+
+function resetMCQ(qi) {
+  answers[qi] = null;
+  for (let i = 0; i < mcqData[qi].opts.length; i++) {
+    const btn = document.getElementById(`opt-${qi}-${i}`);
+    btn.disabled = false;
+    btn.classList.remove('correct','incorrect');
+  }
+  document.getElementById(`fb-${qi}`).className = 'mcq-feedback';
+  document.getElementById(`fb-${qi}`).textContent = '';
+  document.getElementById(`reset-${qi}`).style.display = 'none';
+  recalcScore();
+  updateScore();
+}
+
+function recalcScore() {
+  correct = 0;
+  answers.forEach((a, i) => {
+    if (a !== null && a === mcqData[i].correct) correct++;
+  });
+}
+
+function updateScore() {
+  const answered = answers.filter(a => a !== null).length;
+  if (answered === 0) { document.getElementById('score-box').style.display = 'none'; return; }
+  document.getElementById('score-box').style.display = 'flex';
+  document.getElementById('score-val').textContent = `${correct}/${answered}`;
+  const pct = Math.round((correct / answered) * 100);
+  document.getElementById('score-bar').style.width = pct + '%';
+  const msg = pct === 100 ? 'Perfect score — excellent mastery.' : pct >= 80 ? 'Strong performance.' : pct >= 60 ? 'Good foundation — review the missed items.' : 'Keep revising — revisit the Q&A section.';
+  document.getElementById('score-msg').textContent = msg;
+}
+</script>
+</body>
+</html>
