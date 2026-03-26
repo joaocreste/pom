@@ -672,6 +672,7 @@
     <a href="#history">History</a>
     <a href="#pushpull">Push vs Pull</a>
     <a href="#levers">Levers</a>
+    <a href="#timings">Time Concepts</a>
     <a href="#frameworks">Frameworks</a>
     <a href="#kraljic">Kraljic</a>
     <a href="#qa">Q&amp;A</a>
@@ -975,9 +976,205 @@
   </div>
 </section>
 
+<!-- ═══ TIME CONCEPTS ═══ -->
+<section id="timings">
+  <div class="section-marker">Section 06</div>
+  <h2>Takt Time vs Cycle Time vs Lead Time</h2>
+
+  <p>Three time-related concepts appear constantly in lean operations. They are frequently confused in exams — yet each measures something fundamentally different. Mastering the distinction between them is essential for analysing any production system.</p>
+
+  <!-- THREE DEFINITION CARDS -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:0;border:2px solid var(--rule);border-radius:4px;overflow:hidden;margin:28px 0;">
+
+    <!-- Takt Time -->
+    <div style="padding:24px 22px;background:#eaf2ea;border-right:2px solid var(--rule);">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:#3a6b3a;font-weight:600;margin-bottom:10px;">① Takt Time</div>
+      <div style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:#1a2e1a;line-height:1.2;margin-bottom:12px;">The <em>heartbeat</em><br>of the line</div>
+      <p style="font-size:0.88rem;color:#3a4a3a;line-height:1.6;margin-bottom:14px;">Takt time is set by the <strong>customer</strong>. It answers: <em>how often must the line produce one unit to exactly match demand?</em> It is a target imposed from outside — you do not choose it, the market does.</p>
+      <div style="background:#1a2e1a;color:#eaf2ea;border-radius:3px;padding:10px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.8;">
+        Takt Time =<br>
+        Available Production Time<br>
+        ────────────────────<br>
+        Customer Demand (units)
+      </div>
+      <p style="font-size:0.82rem;color:#6b7060;margin-top:10px;margin-bottom:0;font-style:italic;">e.g. 480 min ÷ 60 units = <strong style="color:#3a6b3a;">8 min/unit</strong></p>
+    </div>
+
+    <!-- Cycle Time -->
+    <div style="padding:24px 22px;background:#fdf8ee;border-right:2px solid var(--rule);">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:#b8860b;font-weight:600;margin-bottom:10px;">② Cycle Time</div>
+      <div style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:#1a2e1a;line-height:1.2;margin-bottom:12px;">The <em>actual pace</em><br>of the process</div>
+      <p style="font-size:0.88rem;color:#4a3a1a;line-height:1.6;margin-bottom:14px;">Cycle time is set by the <strong>process</strong>. It is the time actually elapsed between completing one unit and the next at a given station. It reflects reality — equipment speed, worker pace, setup times — not the ideal.</p>
+      <div style="background:#5a3a00;color:#fdf8ee;border-radius:3px;padding:10px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.8;">
+        Cycle Time =<br>
+        Time to complete one unit<br>
+        at a given workstation<br>
+        (observed / measured)
+      </div>
+      <p style="font-size:0.82rem;color:#6b7060;margin-top:10px;margin-bottom:0;font-style:italic;">e.g. Station 2 takes <strong style="color:#b8860b;">11 min/unit</strong> → bottleneck</p>
+    </div>
+
+    <!-- Lead Time -->
+    <div style="padding:24px 22px;background:#f7f4ed;">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:#6b7060;font-weight:600;margin-bottom:10px;">③ Lead Time</div>
+      <div style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:#1a2e1a;line-height:1.2;margin-bottom:12px;">The <em>total journey</em><br>end to end</div>
+      <p style="font-size:0.88rem;color:#3a3a2a;line-height:1.6;margin-bottom:14px;">Lead time is what the <strong>customer experiences</strong>. It is the total elapsed time from order placement (or raw material entry) to finished goods delivery — including all waiting, queuing, and processing time across the whole system.</p>
+      <div style="background:#3a3a28;color:#f7f4ed;border-radius:3px;padding:10px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.8;">
+        Lead Time =<br>
+        Order received → Order delivered<br>
+        ────────────────────<br>
+        Includes ALL wait + process time
+      </div>
+      <p style="font-size:0.82rem;color:#6b7060;margin-top:10px;margin-bottom:0;font-style:italic;">e.g. Order placed Monday → delivered Friday = <strong style="color:#6b7060;">4 days</strong></p>
+    </div>
+  </div>
+
+  <!-- VISUAL: TIMELINE DIAGRAM -->
+  <h3>Visualising the Three Concepts Together</h3>
+  <p>The diagram below shows a 4-station production line. Read it carefully — all three time concepts appear simultaneously.</p>
+
+  <div style="background:white;border:1px solid var(--rule);border-radius:4px;padding:28px 20px;margin:20px 0;overflow-x:auto;">
+    <svg viewBox="0 0 680 310" width="100%" style="max-width:680px;display:block;margin:0 auto;" xmlns="http://www.w3.org/2000/svg">
+
+      <!-- ── TITLE ROW ── -->
+      <text x="340" y="20" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#6b7060" letter-spacing="0.1em">FOUR-STATION LINE · SINGLE UNIT JOURNEY</text>
+
+      <!-- ── LEAD TIME BRACKET (top) ── -->
+      <line x1="40" y1="38" x2="640" y2="38" stroke="#3a3a28" stroke-width="1.5"/>
+      <line x1="40" y1="32" x2="40" y2="44" stroke="#3a3a28" stroke-width="1.5"/>
+      <line x1="640" y1="32" x2="640" y2="44" stroke="#3a3a28" stroke-width="1.5"/>
+      <text x="340" y="34" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#3a3a28" font-weight="600" letter-spacing="0.12em">LEAD TIME — total elapsed time, order to delivery</text>
+
+      <!-- ── TIMELINE BASE ── -->
+      <line x1="40" y1="155" x2="640" y2="155" stroke="#d4c9a8" stroke-width="1.5"/>
+
+      <!-- ── STATION BLOCKS ── -->
+      <!-- Station 1: cycle 8 min (matches takt) -->
+      <rect x="55" y="110" width="96" height="45" rx="3" fill="#eaf2ea" stroke="#3a6b3a" stroke-width="1.5"/>
+      <text x="103" y="130" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#2d4a2d" font-weight="600">STATION 1</text>
+      <text x="103" y="145" text-anchor="middle" font-family="Source Serif 4" font-size="9" fill="#3a6b3a">8 min</text>
+
+      <!-- Wait between 1 and 2 -->
+      <rect x="151" y="125" width="30" height="30" rx="2" fill="#f7f4ed" stroke="#d4c9a8" stroke-width="1" stroke-dasharray="3,2"/>
+      <text x="166" y="144" text-anchor="middle" font-family="JetBrains Mono" font-size="7.5" fill="#9a9a88">wait</text>
+
+      <!-- Station 2: cycle 11 min — BOTTLENECK -->
+      <rect x="181" y="100" width="132" height="55" rx="3" fill="#fde8c8" stroke="#b8860b" stroke-width="2"/>
+      <text x="247" y="122" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#5a3a00" font-weight="600">STATION 2</text>
+      <text x="247" y="136" text-anchor="middle" font-family="Source Serif 4" font-size="9" fill="#b8860b">11 min ⚠ bottleneck</text>
+      <text x="247" y="149" text-anchor="middle" font-family="JetBrains Mono" font-size="7.5" fill="#b8860b">cycle &gt; takt</text>
+
+      <!-- Wait -->
+      <rect x="313" y="125" width="30" height="30" rx="2" fill="#f7f4ed" stroke="#d4c9a8" stroke-width="1" stroke-dasharray="3,2"/>
+      <text x="328" y="144" text-anchor="middle" font-family="JetBrains Mono" font-size="7.5" fill="#9a9a88">wait</text>
+
+      <!-- Station 3: cycle 6 min -->
+      <rect x="343" y="115" width="72" height="40" rx="3" fill="#eaf2ea" stroke="#3a6b3a" stroke-width="1.5"/>
+      <text x="379" y="133" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#2d4a2d" font-weight="600">STATION 3</text>
+      <text x="379" y="148" text-anchor="middle" font-family="Source Serif 4" font-size="9" fill="#3a6b3a">6 min</text>
+
+      <!-- Wait -->
+      <rect x="415" y="125" width="30" height="30" rx="2" fill="#f7f4ed" stroke="#d4c9a8" stroke-width="1" stroke-dasharray="3,2"/>
+      <text x="430" y="144" text-anchor="middle" font-family="JetBrains Mono" font-size="7.5" fill="#9a9a88">wait</text>
+
+      <!-- Station 4: cycle 8 min -->
+      <rect x="445" y="110" width="96" height="45" rx="3" fill="#eaf2ea" stroke="#3a6b3a" stroke-width="1.5"/>
+      <text x="493" y="130" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#2d4a2d" font-weight="600">STATION 4</text>
+      <text x="493" y="145" text-anchor="middle" font-family="Source Serif 4" font-size="9" fill="#3a6b3a">8 min</text>
+
+      <!-- ORDER IN / OUT -->
+      <text x="40" y="152" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#3a3a28">ORDER</text>
+      <text x="40" y="162" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#3a3a28">IN ▶</text>
+      <text x="640" y="152" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#3a3a28">▶ OUT</text>
+
+      <!-- ── TAKT TIME INDICATOR ── -->
+      <line x1="55" y1="185" x2="151" y2="185" stroke="#3a6b3a" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <line x1="55" y1="180" x2="55" y2="190" stroke="#3a6b3a" stroke-width="1.5"/>
+      <line x1="151" y1="180" x2="151" y2="190" stroke="#3a6b3a" stroke-width="1.5"/>
+      <text x="103" y="200" text-anchor="middle" font-family="JetBrains Mono" font-size="8.5" fill="#3a6b3a" font-weight="600">TAKT = 8 min</text>
+      <text x="103" y="212" text-anchor="middle" font-family="Source Serif 4" font-size="8" fill="#6b7060">(customer sets this)</text>
+
+      <!-- Takt line repeated for bottleneck comparison -->
+      <line x1="181" y1="185" x2="277" y2="185" stroke="#3a6b3a" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <line x1="181" y1="180" x2="181" y2="190" stroke="#3a6b3a" stroke-width="1.5"/>
+      <line x1="277" y1="180" x2="277" y2="190" stroke="#3a6b3a" stroke-width="1.5"/>
+      <text x="229" y="200" text-anchor="middle" font-family="JetBrains Mono" font-size="8.5" fill="#3a6b3a" font-weight="600">TAKT = 8 min</text>
+
+      <!-- Cycle time arrow for bottleneck -->
+      <line x1="181" y1="220" x2="313" y2="220" stroke="#b8860b" stroke-width="2"/>
+      <line x1="181" y1="214" x2="181" y2="226" stroke="#b8860b" stroke-width="2"/>
+      <line x1="313" y1="214" x2="313" y2="226" stroke="#b8860b" stroke-width="2"/>
+      <text x="247" y="236" text-anchor="middle" font-family="JetBrains Mono" font-size="8.5" fill="#b8860b" font-weight="600">CYCLE = 11 min ⚠</text>
+      <text x="247" y="248" text-anchor="middle" font-family="Source Serif 4" font-size="8" fill="#6b7060">(process reality)</text>
+
+      <!-- ── LEGEND ── -->
+      <rect x="55" y="268" width="12" height="12" rx="1" fill="#eaf2ea" stroke="#3a6b3a" stroke-width="1.5"/>
+      <text x="73" y="279" font-family="Source Serif 4" font-size="9" fill="#3a3a28">Cycle ≤ Takt (healthy)</text>
+      <rect x="230" y="268" width="12" height="12" rx="1" fill="#fde8c8" stroke="#b8860b" stroke-width="1.5"/>
+      <text x="248" y="279" font-family="Source Serif 4" font-size="9" fill="#3a3a28">Cycle &gt; Takt (bottleneck)</text>
+      <rect x="430" y="268" width="12" height="12" rx="1" fill="#f7f4ed" stroke="#d4c9a8" stroke-width="1" stroke-dasharray="3,2"/>
+      <text x="448" y="279" font-family="Source Serif 4" font-size="9" fill="#3a3a28">Waiting (non-value)</text>
+
+    </svg>
+  </div>
+
+  <!-- COMPARISON TABLE -->
+  <h3>Side-by-Side Comparison</h3>
+  <table class="fw-table">
+    <thead>
+      <tr>
+        <th>Concept</th>
+        <th>Who sets it?</th>
+        <th>What does it measure?</th>
+        <th>Lean target</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong style="color:#3a6b3a;">Takt Time</strong></td>
+        <td>The <em>customer</em> (via demand rate)</td>
+        <td>Required output pace — how often the line must produce one unit to match demand</td>
+        <td>Use as the design target for line balancing</td>
+      </tr>
+      <tr>
+        <td><strong style="color:#b8860b;">Cycle Time</strong></td>
+        <td>The <em>process</em> (equipment, labour, setup)</td>
+        <td>Actual time between completing consecutive units at a workstation</td>
+        <td>Cycle time = Takt time at every station (balanced line)</td>
+      </tr>
+      <tr>
+        <td><strong style="color:#5a5a40;">Lead Time</strong></td>
+        <td>The <em>system</em> (all delays, queues, processes)</td>
+        <td>Total elapsed time from order entry to delivery — includes all wait and processing time</td>
+        <td>Minimise by reducing WIP and wait time (Little's Law)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- KEY RELATIONSHIPS -->
+  <h3>Three Rules to Remember</h3>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin:20px 0;">
+    <div class="callout" style="margin:0;">
+      <strong>Rule 1 — Bottleneck:</strong> If any station's cycle time exceeds takt time, the whole line falls behind demand. That station is the bottleneck and must be the first improvement target.
+    </div>
+    <div class="callout" style="margin:0;">
+      <strong>Rule 2 — Little's Law:</strong> Lead Time = WIP ÷ Throughput Rate. To cut lead time, reduce WIP (smaller batches, pull systems) or increase throughput (remove bottlenecks).
+    </div>
+    <div class="callout" style="margin:0;">
+      <strong>Rule 3 — Idle waste:</strong> If a station's cycle time is much less than takt time, it will be idle — a different kind of waste. Perfect balance has every station's cycle time equal to takt time.
+    </div>
+  </div>
+
+  <div class="def-box" style="margin-top:24px;">
+    <div class="def-label">Key Exam Sentence</div>
+    <p>Takt time is external and prescriptive — set by customer demand. Cycle time is internal and descriptive — set by process reality. Lead time is systemic — the total customer experience from order to delivery. Lean aims to align cycle time to takt time and minimise lead time by eliminating wait.</p>
+  </div>
+</section>
+
 <!-- ═══ FRAMEWORKS ═══ -->
 <section id="frameworks">
-  <div class="section-marker">Section 06</div>
+  <div class="section-marker">Section 07</div>
   <h2>Key Frameworks at a Glance</h2>
   <p>The following table summarises the major conceptual frameworks covered in lean management, making them fast to revise before an exam.</p>
 
@@ -1031,7 +1228,7 @@
 
 <!-- ═══ KRALJIC ═══ -->
 <section id="kraljic">
-  <div class="section-marker">Section 07</div>
+  <div class="section-marker">Section 08</div>
   <h2>The Kraljic Matrix</h2>
 
   <p>Developed by Peter Kraljic in 1983, the Kraljic Matrix is one of the most widely used tools in supply chain and procurement strategy. It helps operations managers decide <em>how</em> to manage each category of purchased input — not all suppliers deserve the same attention or relationship type.</p>
@@ -1170,7 +1367,7 @@
 
 <!-- ═══ Q&A ═══ -->
 <section id="qa">
-  <div class="section-marker">Section 08</div>
+  <div class="section-marker">Section 09</div>
   <h2>Revision Q&amp;A</h2>
   <p>Click each question to reveal the model answer. These are framed in the style of typical exam questions.</p>
 
@@ -1181,7 +1378,7 @@
 
 <!-- ═══ MCQ ═══ -->
 <section id="mcq">
-  <div class="section-marker">Section 09</div>
+  <div class="section-marker">Section 10</div>
   <h2>Self-Assessment Quiz</h2>
   <p>Test your understanding with the following multiple-choice questions. Each question has one correct answer.</p>
 
